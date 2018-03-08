@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -73,5 +76,52 @@ public class Main {
         //Далі маніпулюємо з ним як завгодно
         car.toString();
         System.out.println(car);
+
+
+
+
+        //РОБОТА З ПАПКАМИ і System Properties
+
+        // Створюю файл, який приймає системну властивість домашньої папки. Повертає всю папку
+        File UserHomeFile = new File(System.getProperty("user.home"));
+        // Якшо файл є папкою тоді ....
+        if (UserHomeFile.isDirectory()){
+            //Видати цю папку як ліст
+            List<File> fileList = Arrays.asList(UserHomeFile.listFiles());
+            //iter
+            for (File file1 : fileList) {
+//                //Виводимо всі папки і файли які є
+//                System.out.println(file1);
+                // Якщо файл є НЕ дерикторією
+                if (!file.isDirectory()){
+                    //Вивести довжину файлу
+                    System.out.println(file1.length());
+                }
+            }
+        }
+
+        //ФІльтрація файлів
+        //Створюєм метод фільтрації в лісті нашого фалу
+        UserHomeFile.listFiles(new FilenameFilter() {
+            @Override
+            // Override дописує автоматично !
+            //dir - шлях до папки; name - імя папки
+            public boolean accept(File dir, String name) {
+                System.out.println(dir + " ");
+                System.out.println(name);
+                return true;
+            }
+        });
+
+        //Створюю ліст файлів з імям fileList
+        //Кажу шо це буде Масив як ліст
+        //З фалйу UserHomeFiles, записаний лістом файлів
+        // контрал Шифт пробіл і вибираю лямбу FilenameFilter
+        List<File> fileList = Arrays.asList(UserHomeFile.listFiles((dir, name) ->{
+            // Якшо name має кінець .ini верни тру. Якщо ні верни фолс
+            return name.endsWith(".ini")? true:false;
+        }));
+        //дляКожного з dileList зробити sout
+        fileList.forEach(System.out::println);
     }
 }
